@@ -1,0 +1,8 @@
+[package]
+name = "duckscript4games"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+duckscript = "*"
+duckscriptsdk = "*"
