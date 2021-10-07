@@ -19,9 +19,15 @@ struct MoveRightCommand {
     state: Rc<RefCell<GameState>>,
 }
 
-fn main() -> Result<(), ScriptError> {
+fn main() {
     let state = Rc::new(RefCell::new(GameState { x: 0.0, y: 0.0 }));
 
+    execute_script("moveright", state.clone()).unwrap();
+
+    dbg!(state);
+}
+
+fn execute_script(script: &str, state: Rc<RefCell<GameState>>) -> Result<Context, ScriptError> {
     let mut context = Context::new();
     duckscriptsdk::load(&mut context.commands)?;
 
@@ -29,11 +35,7 @@ fn main() -> Result<(), ScriptError> {
         state: state.clone(),
     }))?;
 
-    runner::run_script("moveright", context)?;
-
-    dbg!(state);
-
-    Ok(())
+    runner::run_script(script, context)
 }
 
 impl Command for MoveRightCommand {
